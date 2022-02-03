@@ -1,3 +1,4 @@
+
 //function to move screen where user can select available options
 function jumpToCell() { 
   var s = SpreadsheetApp.getActiveSpreadsheet(); 
@@ -94,6 +95,7 @@ defaultRange.copyTo(pasteRange,columnWidths,false);
 var ss = SpreadsheetApp.getActiveSpreadsheet();
 var sheetId = ss.getSheetByName('ScriptSheet').getSheetId();
 var filename = ss.getRange('B7').getValue();
+
 // Creat XLS file as a temporary file and create URL for downloading.
 var s1= ss.getSheetByName('ScriptSheet');
 s1.setHiddenGridlines(false);
@@ -103,7 +105,7 @@ var blob1 = UrlFetchApp.fetch(url1).getBlob().setName(filename + '- Account Summ
 var file1 = DriveApp.createFile(blob1);
 var dlUrl1 = "https://drive.google.com/uc?export=download&id=" + file1.getId();
 
-var str1 = '<script>window.location.href="' + dlUrl1 + '"</script>';
+var str1 = '<script>window.open("' + dlUrl1+ '", "_blank")</script>';
 var html1 = HtmlService.createHtmlOutput(str1);
 SpreadsheetApp.getUi().showModalDialog(html1, "Downloading...");
 file1.setTrashed(true);
@@ -121,7 +123,7 @@ var file = DriveApp.createFile(blob);
 var dlUrl = "https://drive.google.com/uc?export=download&id=" + file.getId();
 
 // Open a dialog and run Javascript for downloading the file.
-var str = '<script>window.location.href="' + dlUrl + '"</script>';
+var str ='<script>window.open("' + dlUrl+ '", "_blank")</script>';
 var html = HtmlService.createHtmlOutput(str);
 SpreadsheetApp.getUi().showModalDialog(html, "Downloading...");
 file.setTrashed(true);
@@ -180,6 +182,8 @@ sheet.getRange(8,2).setValue(sheet.getRange(103,2).getValue());//dol
 sheet.getRange(9,2).setValue(sheet.getRange(104,2).getValue());//claim #
 sheet.getRange(7,8).setValue(sheet.getRange(102,8).getValue());//fdot
 sheet.getRange(8,8).setValue(sheet.getRange(103,8).getValue());//ldot
+
+sheet.getRange(5,2).setNumberFormat('MMMM dd, yyyy');
 
 var lastRow = sheet.getLastRow();
 var numRows = lastRow-105;
